@@ -24,7 +24,6 @@ ActiveRecord::Schema.define(version: 2022_06_17_004054) do
   end
 
   create_table "shelters", force: :cascade do |t|
-    t.integer "total_animals"
     t.string "kind"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
