@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+get "/api/v1/", to: "api/v1/animals#index"
 
   namespace :api do
     namespace :v1 do
