@@ -1,5 +1,5 @@
 class Api::V1::AnimalsController < ApplicationController
-    berfore_action :set_shelter
+    before_action :set_shelter
 
     def index
         @animals = Animals.all
@@ -7,11 +7,12 @@ class Api::V1::AnimalsController < ApplicationController
     end
 
     def create
-        @animal = @shelter.animals.build(animal_params)
+        @animal = @shelter.animals.new(animal_params)
         if @animal.save!
             render json: @shelter
         else
             render json: {error: "Could not submit!"}
+        end
     end
 
     def show
@@ -19,11 +20,17 @@ class Api::V1::AnimalsController < ApplicationController
         render json: @animal
     end
 
-    def delete
+    def destroy
         @animal = Animal.find(params["id"])
-        @shelter = Shelter.find(animal.shelter_id)
+        @shelter = Shelter.find(@animal.shelter_id)
         @animal.destroy
         render json: @shelter
+    end
+
+    def update
+        @animal = Animal.find(params["id"])
+        @animal.update(animal_params)
+        render json: @shelter.animals.new(@animal)
     end
 
     private
@@ -33,7 +40,7 @@ class Api::V1::AnimalsController < ApplicationController
     end
 
     def animal_params
-        params.require(:shelter).permit(:shelter_id, :kind, :availability, :age, :name, :info)
+        params.require(:animal).permit(:shelter_id, :kind, :availability, :age, :name, :info)
     end
     
 end
