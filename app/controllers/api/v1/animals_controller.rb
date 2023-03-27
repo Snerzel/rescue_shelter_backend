@@ -9,7 +9,7 @@ class Api::V1::AnimalsController < ApplicationController
     def create
         @animal = @shelter.animals.new(animal_params)
         if @animal.save!
-            render json: @shelter
+            render json: @animal
         else
             render json: {error: "Could not submit!"}
         end
@@ -24,7 +24,7 @@ class Api::V1::AnimalsController < ApplicationController
         @animal = Animal.find(params["id"])
         @shelter = Shelter.find(@animal.shelter_id)
         @animal.destroy
-        render json: @shelter
+        render json: @animal
     end
 
     def update
